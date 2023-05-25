@@ -90,7 +90,6 @@ const App = () => {
     
     const nameObject = {
         name: newName,
-        id: newName,
         number: newNumber
     }
     
@@ -110,15 +109,19 @@ const App = () => {
             setMessage(null)
           }, 5000)
           })
-        .catch(() => {
+        .catch(error => {
+          setMessage(error.response.data.error)
+          /*
           setMessage(`Information of ${newName} has already been removed from the server`)
+          setPersons(persons.filter(p => p.name !== newName))
+          */
           setStatus("error")
           setTimeout(() => {
             setMessage(null)
             setStatus(null)
           }, 5000)
-          setPersons(persons.filter(p => p.name !== newName))
-          })
+        })
+          
       } 
       setNewName('')
       setNewNumber('')
@@ -137,6 +140,14 @@ const App = () => {
           setMessage(null)
           setStatus(null)
         }, 5000)
+        })
+        .catch(error => {
+          setMessage(error.response.data.error)
+          setStatus("error")
+          setTimeout(() => {
+            setMessage(null)
+            setStatus(null)
+          }, 5000)
         })
       }
     }
